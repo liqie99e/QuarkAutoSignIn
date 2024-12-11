@@ -1,0 +1,40 @@
+name: auto sign
+
+on:
+  workflow_dispatch: # 手动触发
+  schedule:
+    - cron: '0 2 * * *' # 北京时间每天上午10点触发一次
+
+jobs:
+  run_demo_actions:
+    runs-on: ubuntu-latest
+
+    env:
+      KPS: ${{ secrets.KPS }}
+      SIGN: ${{ secrets.SIGN }}
+      VCODE: ${{ secrets.VCODE }}
+      SENDKEY: ${{ secrets.SENDKEY }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies if requirements.txt exists
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run main.py
+        run: python main.py
