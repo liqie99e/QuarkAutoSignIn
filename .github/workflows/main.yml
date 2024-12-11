@@ -1,4 +1,4 @@
-name: auto sign
+name: daily auto sign-in
 
 on:
   workflow_dispatch: # 手动触发
@@ -6,7 +6,7 @@ on:
     - cron: '0 2 * * *' # 北京时间每天上午10点触发一次
 
 jobs:
-  run_demo_actions:
+  sign_in:
     runs-on: ubuntu-latest
 
     env:
