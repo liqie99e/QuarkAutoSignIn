@@ -14,6 +14,9 @@ def sc_send(title: str, desp: str = "", options: Optional[Dict[str, Any]] = None
         options = {}
 
     sendkey = os.environ.get("SENDKEY")
+    if sendkey is None:
+        logger.warning("未设置 Server 酱的发送密钥")
+        return
 
     try:
         if sendkey.startswith("sctp"):
