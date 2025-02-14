@@ -3,7 +3,7 @@ name: daily auto sign-in
 on:
   workflow_dispatch: # 手动触发
   schedule:
-    - cron: '0 2 * * *' # 北京时间每天上午10点触发一次
+    - cron: '0 1 * * *' # 北京时间每天上午9点触发一次
 
 jobs:
   sign_in:
